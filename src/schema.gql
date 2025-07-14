@@ -1,0 +1,121 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateSuperAdminUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input GetRevenueArgs {
+  end: String
+  month: Int
+  start: String
+  type: RevenueTypeEnum
+  year: Int
+}
+
+type Mutation {
+  createUser(input: CreateSuperAdminUserInput!): SuperAdminUserType!
+  login(input: loginInput!): loginTypeResponse!
+}
+
+type PaymentType {
+  amount: Int!
+  notes: String
+  paidAt: DateTime!
+  status: String!
+  tenantId: String!
+  type: String!
+}
+
+"""The duration of the plan"""
+enum PlanDuration {
+  month
+  quarter
+  year
+}
+
+"""The type of plan"""
+enum PlanType {
+  BASIC
+  FREE
+  PREMIUM
+  STANDARD
+}
+
+type Query {
+  getHello: String!
+  revenue(args: GetRevenueArgs!): revenueResponse!
+  tenants: tenantResponse!
+}
+
+type RequestedPlan {
+  duration: PlanDuration!
+  plan: PlanType!
+}
+
+enum RevenueTypeEnum {
+  MONTHLY
+  YEARLY
+}
+
+type SuperAdminUserType {
+  email: String!
+  id: Int!
+  name: String!
+  password: String!
+  role: String!
+}
+
+input loginInput {
+  email: String!
+  password: String!
+}
+
+type loginTypeResponse {
+  message: String!
+  token: String!
+}
+
+type revenueResponse {
+  count: Int!
+  endDate: DateTime!
+  payments: [PaymentType!]!
+  startDate: DateTime!
+  totalRevenue: Int!
+}
+
+type tenantResponse {
+  active: [tenantWithPaymnets!]!
+  activeCount: Int!
+  all: [tenantWithPaymnets!]!
+  inactive: [tenantWithPaymnets!]!
+  inactiveCount: Int!
+  message: String!
+}
+
+type tenantWithPaymnets {
+  Email: String!
+  branchesCount: Int
+  businessNumber: String!
+  companyName: String!
+  confirmed: Boolean!
+  countryCode: String!
+  ownerFirstName: String!
+  ownerLastName: String!
+  payments: [PaymentType!]!
+  phoneNumber: String!
+  pricesWithVat: Boolean!
+  requestedPlan: RequestedPlan
+  seconderyNameing: Boolean!
+  specficSupplier: Boolean!
+  status: String
+  timeZone: String!
+}
